@@ -2,7 +2,7 @@ import datos
 import operaciones
 
 codigo = input ("Ingrese el código del equipo: ").strip().upper()
-tipo = input ("Ingrese el tipo: Desktop, Notebook, Monitos o Celular ").strip()
+tipo = input("Ingrese el tipo: Desktop, Notebook, Monitor o Celular: ").strip().capitalize()
 
 operaciones.registrar_equipo(codigo, tipo) #Valida los datos y registra el equipo si son correctos.
 

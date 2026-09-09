@@ -17,4 +17,4 @@ def registrar_equipo(codigo, tipo):
     datos.equipos_codigos.append(codigo)
     datos.equipos_tipos.append(tipo)
     datos.equipos_estados.append("Disponible")
-    datos.equipos_legajos.append(None)
+    datos.equipos_legajos.append("")
