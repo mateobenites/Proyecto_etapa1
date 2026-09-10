@@ -21,3 +21,7 @@ for i in departamentos:          # por cada departamento (4 veces)
     for j in tipos_equipos:        # por cada tipo de equipo (4 veces)
         fila.append(0)
     matriz_asignaciones.append(fila)
+
+
+
+
