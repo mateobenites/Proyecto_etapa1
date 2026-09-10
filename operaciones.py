@@ -52,5 +52,18 @@ def buscar_posicion(lista, valor_buscado):
             return i
     return -1
 
+def asignar_equipo(codigo,legajo):
+
+    posicion_equipo = buscar_posicion(datos.equipos_codigos, codigo)
+
+    if posicion_equipo == -1:
+        print("Error: No existe un equipo con este codigo.")
+        return
+
+    posicion_empleado = buscar_posicion(datos.empleados_legajos, legajo)
+
+    if posicion_empleado == -1:
+        print("Error: No existe un empleado con este legajo.")
+        return
 
 
