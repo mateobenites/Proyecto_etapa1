@@ -39,6 +39,9 @@ while opcion != "4":
 
         departamento =input("Ingrese el departamento: Administración, Vemtas, Sistemas o Marketing: ").strip().capitalize()
 
+        if departamento == "Administracion":
+            departamento = "Administración"
+
         operaciones.registrar_empleado(legajo, nombre, departamento)
 
      
