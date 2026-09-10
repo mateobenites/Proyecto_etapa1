@@ -13,6 +13,34 @@ def registrar_equipo(codigo, tipo):
         print("Error: Tipo invalido.")
         return
 
+def registrar_empleado(legajo, nombre, departamento):
+    if legajo == "" or nombre == "" or departamento == "":
+        print("Error: Legajo, nombre y departamento son obligatorios.")
+        return
+
+    if not legajo.isdigit():
+        print("Error: Legajo debe ser un número.")
+        return
+
+    if len(legajo) != 4 or not 1000 <= int(legajo) <= 9999:
+        print("Error: Legajo debe tener 4 dígitos y estar entre 1000 y 9999.")
+        return
+
+    if legajo in datos.empleados_legajos:
+        print("Error: Ya existe un empleado con este legajo.")
+        return
+
+    if departamento not in datos.departamentos:
+        print("Error: Departamento invalido.")
+        return
+
+    datos.empleados_legajos.append(legajo)
+    datos.empleados_nombres.append(nombre)
+    datos.empleados_departamentos.append(departamento)
+
+    print("Empleado registrado exitosamente.")
+    
+
 
     datos.equipos_codigos.append(codigo)
     datos.equipos_tipos.append(tipo)
