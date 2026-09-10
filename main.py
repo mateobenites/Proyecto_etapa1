@@ -3,11 +3,12 @@ import operaciones
 
 opcion = ""
 
-while opcion != "3":
+while opcion != "4":
     print("\n--- GESTIÓN DE EQUIPAMIENTO ---")
     print("1. Registrar equipo")
     print("2. Listar equipos")
-    print("3. Salir")
+    print("3. Registrar empleado")
+    print("4. Salir")
 
     opcion = input("Seleccione una opción: ").strip()
 
@@ -33,7 +34,17 @@ while opcion != "3":
                 )
 
     if opcion == "3":
-        print("Programa finaliado")
+        legajo = input("Ingrese el número de legajo (1000 a 9999): ").strip()
+        nombre = input("Ingrese el nombre y apellido: ").strip()
+
+        departamento =input("Ingrese el departamento: Administración, Vemtas, Sistemas o Marketing: ").strip().capitalize()
+
+        operaciones.registrar_empleado(legajo, nombre, departamento)
+
+     
+
+    if opcion == "4":
+         print("Programa finalizado")
 
     else:
         print("Opción inválida. Intente nuevamente.")
