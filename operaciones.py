@@ -13,7 +13,6 @@ def registrar_equipo(codigo, tipo):
         print("Error: Tipo invalido.")
         return
 
-
     datos.equipos_codigos.append(codigo)
     datos.equipos_tipos.append(tipo)
     datos.equipos_estados.append("Disponible")
@@ -106,3 +105,54 @@ def ranking_departamentos():
 def filtrar_equipos_disponibles():
     disponibles = [equipos_codigos[i] for i in range(len(equipos_codigos)) if equipos_estados[i] == "Disponible"]
     print(disponibles)
+    datos.equipos_legajos.append("")
+
+def registrar_empleado(legajo, nombre, departamento):
+    if legajo == "" or nombre == "" or departamento == "":
+        print("Error: Legajo, nombre y departamento son obligatorios.")
+        return
+
+    if not legajo.isdigit():
+        print("Error: Legajo debe ser un número.")
+        return
+
+    if len(legajo) != 4 or not 1000 <= int(legajo) <= 9999:
+        print("Error: Legajo debe tener 4 dígitos y estar entre 1000 y 9999.")
+        return
+
+    if legajo in datos.empleados_legajos:
+        print("Error: Ya existe un empleado con este legajo.")
+        return
+
+    if departamento not in datos.departamentos:
+        print("Error: Departamento invalido.")
+        return
+
+    datos.empleados_legajos.append(legajo)
+    datos.empleados_nombres.append(nombre)
+    datos.empleados_departamentos.append(departamento)
+
+    print("Empleado registrado exitosamente.")
+
+def buscar_posicion(lista, valor_buscado):
+
+    for i in range(len(lista)):
+        if lista[i] == valor_buscado:
+            return i
+    return -1
+
+def asignar_equipo(codigo,legajo):
+
+    posicion_equipo = buscar_posicion(datos.equipos_codigos, codigo)
+
+    if posicion_equipo == -1:
+        print("Error: No existe un equipo con este codigo.")
+        return
+
+    posicion_empleado = buscar_posicion(datos.empleados_legajos, legajo)
+
+    if posicion_empleado == -1:
+        print("Error: No existe un empleado con este legajo.")
+        return
+
+
