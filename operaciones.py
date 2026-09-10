@@ -13,6 +13,11 @@ def registrar_equipo(codigo, tipo):
         print("Error: Tipo invalido.")
         return
 
+    datos.equipos_codigos.append(codigo)
+    datos.equipos_tipos.append(tipo)
+    datos.equipos_estados.append("Disponible")
+    datos.equipos_legajos.append("")
+
 def registrar_empleado(legajo, nombre, departamento):
     if legajo == "" or nombre == "" or departamento == "":
         print("Error: Legajo, nombre y departamento son obligatorios.")
@@ -39,10 +44,6 @@ def registrar_empleado(legajo, nombre, departamento):
     datos.empleados_departamentos.append(departamento)
 
     print("Empleado registrado exitosamente.")
-    
 
 
-    datos.equipos_codigos.append(codigo)
-    datos.equipos_tipos.append(tipo)
-    datos.equipos_estados.append("Disponible")
-    datos.equipos_legajos.append("")
+
