@@ -45,5 +45,12 @@ def registrar_empleado(legajo, nombre, departamento):
 
     print("Empleado registrado exitosamente.")
 
+def buscar_posicion(lista, valor_buscado):
+
+    for i in range(len(lista)):
+        if lista[i] == valor_buscado:
+            return i
+    return -1
+
 
 
