@@ -241,8 +241,21 @@ def alerta_baja_disponibilidad():
 
 
 def ranking_departamentos():
-    totales = [(datos.departamentos[i], sum(datos.matriz_asignaciones[i])) for i in range(len(datos.departamentos))]
-    ranking = sorted(totales, key=lambda x: x[1], reverse=True)[:3]
+    totales = []
+    for i in range(len(datos.departamentos)):
+        totales.append((datos.departamentos[i], sum(datos.matriz_asignaciones[i])))
+
+    obtener_cantidad = lambda x: x[1]
+
+    for i in range(len(totales)):
+        indice_mayor = i
+        for j in range(i + 1, len(totales)):
+            if obtener_cantidad(totales[j]) > obtener_cantidad(totales[indice_mayor]):
+                indice_mayor = j
+        totales[i], totales[indice_mayor] = totales[indice_mayor], totales[i]
+
+    ranking = totales[:3]
+
     for depto, cantidad in ranking:
         print(depto, ":", cantidad)
 
