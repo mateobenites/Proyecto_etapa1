@@ -1,54 +1,93 @@
-import datos
 import operaciones
 
 opcion = ""
 
-while opcion != "4":
+while opcion != "10":
     print("\n--- GESTIÓN DE EQUIPAMIENTO ---")
+    print("0. Acerca del sistema")
     print("1. Registrar equipo")
-    print("2. Listar equipos")
-    print("3. Registrar empleado")
-    print("4. Salir")
+    print("2. Registrar empleado")
+    print("3. Asignar equipo")
+    print("4. Registrar devolución")
+    print("5. Modificar estado de equipo")
+    print("6. Buscar equipo")
+    print("7. Consultar equipos de un empleado")
+    print("8. Listar inventario")
+    print("9. Estadísticas e informes")
+    print("10. Salir")
 
     opcion = input("Seleccione una opción: ").strip()
 
-    if opcion == "1":
-        codigo = input("Ingrese el código del equipo: ").strip().upper()
+    if opcion == "0":
+        print("\n--- ACERCA DEL SISTEMA ---")
+        print("Sistema de Administración de Equipamiento Tecnológico.")
+        print("Permite registrar equipos y empleados, asignar y devolver")
+        print("dispositivos, controlar su estado y consultar estadísticas")
+        print("generales del inventario de la organización.")
 
+    elif opcion == "1":
+        codigo = input("Ingrese el código del equipo: ").strip().upper()
         tipo = input("Ingrese el tipo: Desktop, Notebook, Monitor o Celular: ").strip().capitalize()
 
         operaciones.registrar_equipo(codigo, tipo)
 
-    if opcion == "2":
-        print("\n--- LISTA DE EQUIPOS ---")
-
-        if len(datos.equipos_codigos) == 0:
-            print("Todavía no hay equipos registrados.")
-
-        else:
-            for i in range(len(datos.equipos_codigos)):
-                print(
-                    f"Codigo: {datos.equipos_codigos[i]}"
-                    f"Tipo: {datos.equipos_tipos[i]}"
-                    f"Estado: {datos.equipos_estados[i]}"
-                )
-
-    if opcion == "3":
+    elif opcion == "2":
         legajo = input("Ingrese el número de legajo (1000 a 9999): ").strip()
         nombre = input("Ingrese el nombre y apellido: ").strip()
-
-        departamento =input("Ingrese el departamento: Administración, Vemtas, Sistemas o Marketing: ").strip().capitalize()
+        departamento = input("Ingrese el departamento: Administración, Ventas, Sistemas o Marketing: ").strip().capitalize()
 
         if departamento == "Administracion":
             departamento = "Administración"
 
         operaciones.registrar_empleado(legajo, nombre, departamento)
 
-     
+    elif opcion == "3":
+        codigo = input("Ingrese el código del equipo a asignar: ").strip().upper()
+        legajo = input("Ingrese el legajo del empleado: ").strip()
 
-    if opcion == "4":
-         print("Programa finalizado")
+        operaciones.asignar_equipo(codigo, legajo)
+
+    elif opcion == "4":
+        codigo = input("Ingrese el código del equipo a devolver: ").strip().upper()
+
+        operaciones.devolver_equipo(codigo)
+
+    elif opcion == "5":
+        codigo = input("Ingrese el código del equipo: ").strip().upper()
+        nuevo_estado = input("Ingrese el nuevo estado: En reparacion, Disponible o Fuera de servicio: ").strip().capitalize()
+
+        operaciones.modificar_estado_equipo(codigo, nuevo_estado)
+
+    elif opcion == "6":
+        operaciones.buscar_equipo_por_codigo()
+
+    elif opcion == "7":
+        operaciones.buscar_empleado_por_legajo()
+
+    elif opcion == "8":
+        print("\n--- LISTA DE EQUIPOS ---")
+        operaciones.listar_inventario()
+
+    elif opcion == "9":
+        print("\n=== ESTADÍSTICAS E INFORMES ===")
+
+        print("\n--- 1. Inventario General ---")
+        operaciones.listar_inventario()
+
+        print("\n--- 2. Equipamiento por Departamento ---")
+        operaciones.informe_equipamiento_por_departamento()
+
+        print("\n--- 3. Listado por Estados ---")
+        operaciones.informe_listado_por_estados()
+
+        print("\n--- 4. Ranking de Departamentos ---")
+        operaciones.ranking_departamentos()
+
+        print("\n--- 5. Resumen General del Inventario ---")
+        operaciones.informe_resumen_general()
+
+    elif opcion == "10":
+        print("Programa finalizado")
 
     else:
         print("Opción inválida. Intente nuevamente.")
-

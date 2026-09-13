@@ -16,9 +16,9 @@ equipos_legajos = []
 
 # Matriz - Departamentos x Tipos, inicializada en 0
 matriz_asignaciones = []
-for i in departamentos:          # por cada departamento (4 veces)
+for i in departamentos:
     fila = []
-    for j in tipos_equipos:        # por cada tipo de equipo (4 veces)
+    for j in tipos_equipos:
         fila.append(0)
     matriz_asignaciones.append(fila)
 
