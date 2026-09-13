@@ -59,10 +59,12 @@ while opcion != "10":
         operaciones.modificar_estado_equipo(codigo, nuevo_estado)
 
     elif opcion == "6":
-        operaciones.buscar_equipo_por_codigo()
+        codigo = input("Código del equipo: ").strip().upper()
+        operaciones.buscar_equipo_por_codigo(codigo)
 
     elif opcion == "7":
-        operaciones.buscar_empleado_por_legajo()
+        legajo = input("Legajo del empleado: ").strip()
+        operaciones.buscar_empleado_por_legajo(legajo)
 
     elif opcion == "8":
         print("\n--- LISTA DE EQUIPOS ---")
@@ -85,6 +87,21 @@ while opcion != "10":
 
         print("\n--- 5. Resumen General del Inventario ---")
         operaciones.informe_resumen_general()
+
+        print("\n--- Totales por Departamento ---")
+        operaciones.total_asignados_por_departamento()
+
+        print("\n--- Totales por Tipo de Equipo ---")
+        operaciones.total_asignados_por_tipo()
+
+        print("\n--- Equipos en Reparación ---")
+        operaciones.contar_en_reparacion()
+
+        print("\n--- Equipos Disponibles (filtro) ---")
+        operaciones.filtrar_equipos_disponibles()
+
+        print("\n--- Alertas de Baja Disponibilidad ---")
+        operaciones.alerta_baja_disponibilidad()
 
     elif opcion == "10":
         print("Programa finalizado")

@@ -150,8 +150,7 @@ def modificar_estado_equipo(codigo, nuevo_estado):
     print("Estado actualizado exitosamente.")
 
 
-def buscar_equipo_por_codigo():
-    codigo = input("Código del equipo: ").strip().upper()
+def buscar_equipo_por_codigo(codigo):
     if codigo not in datos.equipos_codigos:
         print("No existe ese equipo.")
         return
@@ -167,8 +166,7 @@ def buscar_equipo_por_codigo():
         print(datos.equipos_codigos[i], datos.equipos_tipos[i], datos.equipos_estados[i], "Sin asignar")
 
 
-def buscar_empleado_por_legajo():
-    legajo = input("Legajo del empleado: ").strip()
+def buscar_empleado_por_legajo(legajo):
     if legajo not in datos.empleados_legajos:
         print("No existe ese empleado.")
         return
@@ -179,7 +177,6 @@ def buscar_empleado_por_legajo():
     for k in range(len(datos.equipos_codigos)):
         if datos.equipos_legajos[k] == legajo:
             print(" -", datos.equipos_codigos[k], datos.equipos_tipos[k], datos.equipos_estados[k])
-
 
 def listar_inventario():
     if len(datos.equipos_codigos) == 0:
