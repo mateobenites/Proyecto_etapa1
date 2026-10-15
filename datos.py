@@ -1,5 +1,5 @@
 # Tuplas para datos fijos 
-estados_equipos = ("Disponible", "Asignado", "En reparacion", "Fuera de servicio")
+estados_equipos = ("Disponible", "Asignado", "En reparación", "Fuera de servicio")
 departamentos = ("Administración", "Ventas", "Sistemas", "Marketing")
 tipos_equipos = ("Desktop", "Notebook", "Monitor", "Celular")
 

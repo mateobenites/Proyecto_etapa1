@@ -54,7 +54,7 @@ while opcion != "10":
 
     elif opcion == "5":
         codigo = input("Ingrese el código del equipo: ").strip().upper()
-        nuevo_estado = input("Ingrese el nuevo estado: En reparacion, Disponible o Fuera de servicio: ").strip().capitalize()
+        nuevo_estado = input("Ingrese el nuevo estado: En reparación, Disponible o Fuera de servicio: ").strip().capitalize()
 
         operaciones.modificar_estado_equipo(codigo, nuevo_estado)
 

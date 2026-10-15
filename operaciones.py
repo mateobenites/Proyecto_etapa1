@@ -142,12 +142,12 @@ def modificar_estado_equipo(codigo, nuevo_estado):
         print("Error: Un equipo Fuera de servicio no puede cambiar de estado.")
         return
 
-    if estado_actual == "Disponible" and nuevo_estado != "En reparacion":
-        print("Error: Desde Disponible solo se puede pasar a En reparacion.")
+    if estado_actual == "Disponible" and nuevo_estado != "En reparación":
+        print("Error: Desde Disponible solo se puede pasar a En reparación.")
         return
 
-    if estado_actual == "En reparacion" and nuevo_estado not in ("Disponible", "Fuera de servicio"):
-        print("Error: Desde En reparacion solo se puede pasar a Disponible o Fuera de servicio.")
+    if estado_actual == "En reparación" and nuevo_estado not in ("Disponible", "Fuera de servicio"):
+        print("Error: Desde En reparación solo se puede pasar a Disponible o Fuera de servicio.")
         return
 
     datos.equipos_estados[pos_equipo] = nuevo_estado
@@ -215,7 +215,7 @@ def porcentaje_equipos_asignados():
 
 
 def contar_en_reparacion():
-    print("En reparación:", datos.equipos_estados.count("En reparacion"))
+    print("En reparación:", datos.equipos_estados.count("En reparación"))
 
 
 def departamento_mayor_asignacion():
