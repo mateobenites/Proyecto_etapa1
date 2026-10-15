@@ -122,25 +122,41 @@ def main():
             operaciones.informe_listado_por_estados(equipos_codigos, equipos_estados)
 
             print("\n--- 4. Ranking de Departamentos ---")
-            operaciones.ranking_departamentos(matriz_asignaciones)
+            ranking = operaciones.ranking_departamentos(matriz_asignaciones)
+
+            for depto,cantidad in ranking:
+                print(depto, ":", cantidad)
 
             print("\n--- 5. Resumen General del Inventario ---")
             operaciones.informe_resumen_general(equipos_codigos, equipos_estados, matriz_asignaciones)
 
             print("\n--- Totales por Departamento ---")
-            operaciones.total_asignados_por_departamento(matriz_asignaciones)
+            totales = operaciones.total_asignados_por_departamento(matriz_asignaciones)
+
+            for i in range(len(datos.departamentos)):
+                print(datos.departamentos[i], ":", totales[i])
 
             print("\n--- Totales por Tipo de Equipo ---")
-            operaciones.total_asignados_por_tipo(matriz_asignaciones)
+            totales_tipo = operaciones.total_asignados_por_tipo(matriz_asignaciones)
+
+            for i in range(len(datos.tipos_equipos)):
+                print(datos.tipos_equipos[i], ":", totales_tipo[i])
 
             print("\n--- Equipos en Reparación ---")
-            operaciones.contar_en_reparacion(equipos_estados)
+            cantidad = operaciones.contar_en_reparacion(equipos_estados)
+            print("En reparación:", cantidad)
 
             print("\n--- Equipos Disponibles (filtro) ---")
-            operaciones.filtrar_equipos_disponibles(equipos_codigos, equipos_estados)
-
+            disponibles = operaciones.filtar_equipos_disponibles(
+                equipos_codigos, equipos_estados
+            )
+            print("Disponibles:", disponibles)
+            
             print("\n--- Alertas de Baja Disponibilidad ---")
-            operaciones.alerta_baja_disponibilidad(equipos_tipos, equipos_estados)
+            alertas = operaciones.alerta_baja_disponibilidad(equipos_tipos, equipos_estados)
+
+            for tipo, disponibles in alertas:
+                print("Alerta:", tipo, "-", disponibles, "disponibles")
 
         elif opcion == "10":
             print("Programa finalizado")

@@ -17,7 +17,7 @@ def registrar_equipo(codigo, tipo, equipos_codigos, equipos_tipos, equipos_estad
         print("Error: Codigo debe ser alfanumérico.")
         return
 
-    if codigo in datos.equipos_codigos:
+    if codigo in equipos_codigos:
         print("Error: Ya existe un equipo con este codigo.")
         return
 
@@ -198,49 +198,77 @@ def listar_inventario(equipos_codigos, equipos_tipos, equipos_estados):
 
 
 def total_asignados_por_departamento(matriz_asignaciones):
+    totales = []
+
     for i in range(len(datos.departamentos)):
-        print(datos.departamentos[i], ":", sum(matriz_asignaciones[i]))
+        total = sum(matriz_asignaciones[i])
+        totales.append(total)
+
+    return totales
 
 
 def total_asignados_por_tipo(matriz_asignaciones):
+    totales = []
+
     for j in range(len(datos.tipos_equipos)):
-        print(datos.tipos_equipos[j], ":", sum(fila[j] for fila in matriz_asignaciones))
+        total = 0
+
+        for i in range(len(datos.departamentos)):
+            total += matriz_asignaciones[i][j]
+
+        totales.append(total)
+
+    return totales
 
 
 def porcentaje_equipos_asignados(equipos_estados):
     if not equipos_estados:
-        print("No hay equipos.")
-        return
+        return 0
+
     asignados = equipos_estados.count("Asignado")
-    print("Porcentaje asignado:", round(asignados / len(equipos_estados) * 100, 2), "%")
+    porcentaje = round(asignados / len(equipos_estados) * 100, 2)
+
+    return porcentaje
 
 
 def contar_en_reparacion(equipos_estados):
-    print("En reparación:", equipos_estados.count("En reparación"))
+    cantidad = equipos_estados.count("En reparación")
+    return cantidad
 
 
 
 def departamento_mayor_asignacion(matriz_asignaciones):
     totales = [sum(fila) for fila in matriz_asignaciones]
     maximo = max(totales)
+
+    departamentos_mayores = []
+
     if maximo == 0:
-        print("No hay equipos asignados.")
-        return
+        return departamentos_mayores
+
     for i in range(len(datos.departamentos)):
         if totales[i] == maximo:
-            print(datos.departamentos[i], ":", maximo)
+            departamentos_mayores.append(datos.departamentos[i])
+
+    return departamentos_mayores
 
 
 def alerta_baja_disponibilidad(equipos_tipos, equipos_estados):
+    alertas = []
+
     for tipo in datos.tipos_equipos:
         disponibles = sum(1 for i in range(len(equipos_tipos))
-                           if equipos_tipos[i] == tipo and equipos_estados[i] == "Disponible")
+                          if equipos_tipos[i] == tipo and equipos_estados[i] == "Disponible")
+
         if disponibles < 2:
-            print("Alerta:", tipo, "-", disponibles, "disponibles")
+            alertas.append((tipo, disponibles))
+
+    return alertas
 
 
 def ranking_departamentos(matriz_asignaciones):
     totales = []
+
     for i in range(len(datos.departamentos)):
         totales.append((datos.departamentos[i], sum(matriz_asignaciones[i])))
 
@@ -248,21 +276,23 @@ def ranking_departamentos(matriz_asignaciones):
 
     for i in range(len(totales)):
         indice_mayor = i
+
         for j in range(i + 1, len(totales)):
             if obtener_cantidad(totales[j]) > obtener_cantidad(totales[indice_mayor]):
                 indice_mayor = j
+
         totales[i], totales[indice_mayor] = totales[indice_mayor], totales[i]
 
     ranking = totales[:3]
 
-    for depto, cantidad in ranking:
-        print(depto, ":", cantidad)
+    return ranking
 
 
 def filtrar_equipos_disponibles(equipos_codigos, equipos_estados):
     disponibles = [equipos_codigos[i] for i in range(len(equipos_codigos))
                    if equipos_estados[i] == "Disponible"]
-    print(disponibles)  
+
+    return disponibles
 
 
 def informe_equipamiento_por_departamento(equipos_codigos, equipos_tipos, equipos_legajos, empleados_legajos, empleados_departamentos, matriz_asignaciones):
@@ -301,5 +331,14 @@ def informe_resumen_general(equipos_codigos, equipos_estados, matriz_asignacione
         cantidad = equipos_estados.count(estado)
         print(f"{estado}: {cantidad}")
 
-    porcentaje_equipos_asignados(equipos_estados)
-    departamento_mayor_asignacion(matriz_asignaciones)
+    porcentaje = porcentaje_equipos_asignados(equipos_estados)
+    print("Porcentaje asignado:", porcentaje, "%")
+    departamentos_mayores = departamento_mayor_asignacion(matriz_asignaciones)
+
+    if len(departamentos_mayores) == 0:
+        print("No hay equipos asignados.")
+    else:
+        maximo = max([sum(fila) for fila in matriz_asignaciones])
+
+        for departamento in departamentos_mayores:
+            print(departamento, ":", maximo)
