@@ -13,8 +13,9 @@ def registrar_equipo(codigo, tipo):
         print("Error: Codigo o tipo son obligatorios.")
         return
 
-    if codigo.isdigit():
-        codigo = str(int(codigo))
+    if not codigo.isalnum():
+        print("Error: Codigo debe ser alfanumérico.")
+        return
 
     if codigo in datos.equipos_codigos:
         print("Error: Ya existe un equipo con este codigo.")
@@ -60,8 +61,7 @@ def registrar_empleado(legajo, nombre, departamento):
 
 
 def asignar_equipo(codigo, legajo):
-    if codigo.isdigit():
-        codigo = str(int(codigo))
+
     pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
@@ -90,8 +90,7 @@ def asignar_equipo(codigo, legajo):
 
 
 def devolver_equipo(codigo):
-    if codigo.isdigit():
-        codigo = str(int(codigo))
+
     pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
@@ -123,8 +122,7 @@ def devolver_equipo(codigo):
 
 
 def modificar_estado_equipo(codigo, nuevo_estado):
-    if codigo.isdigit():
-        codigo = str(int(codigo))
+
     pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
@@ -157,8 +155,7 @@ def modificar_estado_equipo(codigo, nuevo_estado):
 
 
 def buscar_equipo_por_codigo(codigo):
-    if codigo.isdigit():
-        codigo = str(int(codigo))
+
     if codigo not in datos.equipos_codigos:
         print("No existe ese equipo.")
         return
