@@ -8,7 +8,7 @@ def buscar_posicion(lista, valor_buscado):
     return -1
 
 
-def registrar_equipo(codigo, tipo):
+def registrar_equipo(codigo, tipo, equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos):
     if codigo == "" or tipo == "":
         print("Error: Codigo o tipo son obligatorios.")
         return
@@ -25,14 +25,14 @@ def registrar_equipo(codigo, tipo):
         print("Error: Tipo invalido.")
         return
 
-    datos.equipos_codigos.append(codigo)
-    datos.equipos_tipos.append(tipo)
-    datos.equipos_estados.append("Disponible")
-    datos.equipos_legajos.append("")
+    equipos_codigos.append(codigo)
+    equipos_tipos.append(tipo)
+    equipos_estados.append("Disponible")
+    equipos_legajos.append("")
 
     print("Equipo registrado exitosamente.")
 
-def registrar_empleado(legajo, nombre, departamento):
+def registrar_empleado(legajo, nombre, departamento, empleados_legajos, empleados_nombres, empleados_departamentos):
     if legajo == "" or nombre == "" or departamento == "":
         print("Error: Legajo, nombre y departamento son obligatorios.")
         return
@@ -45,7 +45,7 @@ def registrar_empleado(legajo, nombre, departamento):
         print("Error: Legajo debe tener 4 dígitos y estar entre 1000 y 9999.")
         return
 
-    if legajo in datos.empleados_legajos:
+    if legajo in empleados_legajos:
         print("Error: Ya existe un empleado con este legajo.")
         return
 
@@ -53,77 +53,76 @@ def registrar_empleado(legajo, nombre, departamento):
         print("Error: Departamento invalido.")
         return
 
-    datos.empleados_legajos.append(legajo)
-    datos.empleados_nombres.append(nombre)
-    datos.empleados_departamentos.append(departamento)
+    empleados_legajos.append(legajo)
+    empleados_nombres.append(nombre)
+    empleados_departamentos.append(departamento)
 
     print("Empleado registrado exitosamente.")
 
 
-def asignar_equipo(codigo, legajo):
-
-    pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
+def asignar_equipo(codigo, legajo, equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos, empleados_legajos, empleados_departamentos, matriz_asignaciones):
+    pos_equipo = buscar_posicion(equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
         return
 
-    pos_empleado = buscar_posicion(datos.empleados_legajos, legajo)
+    pos_empleado = buscar_posicion(empleados_legajos, legajo)
     if pos_empleado == -1:
         print("Error: No existe un empleado con este legajo.")
         return
 
-    if datos.equipos_estados[pos_equipo] != "Disponible":
+    if equipos_estados[pos_equipo] != "Disponible":
         print("Error: El equipo debe estar Disponible para poder asignarlo.")
         return
 
-    departamento = datos.empleados_departamentos[pos_empleado]
-    tipo = datos.equipos_tipos[pos_equipo]
+    departamento = empleados_departamentos[pos_empleado]
+    tipo = equipos_tipos[pos_equipo]
 
     pos_depto = datos.departamentos.index(departamento)
     pos_tipo = datos.tipos_equipos.index(tipo)
 
-    datos.equipos_estados[pos_equipo] = "Asignado"
-    datos.equipos_legajos[pos_equipo] = legajo
-    datos.matriz_asignaciones[pos_depto][pos_tipo] += 1
+    equipos_estados[pos_equipo] = "Asignado"
+    equipos_legajos[pos_equipo] = legajo
+    matriz_asignaciones[pos_depto][pos_tipo] += 1
 
     print("Equipo asignado exitosamente.")
 
+def devolver_equipo(codigo, equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos, empleados_legajos, empleados_departamentos, matriz_asignaciones):
+    pos_equipo = buscar_posicion(equipos_codigos, codigo)
 
-def devolver_equipo(codigo):
-
-    pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
         return
 
-    if datos.equipos_estados[pos_equipo] != "Asignado":
+    if equipos_estados[pos_equipo] != "Asignado":
         print("Error: El equipo no esta asignado, no se puede devolver.")
         return
 
-    legajo = datos.equipos_legajos[pos_equipo]
+    legajo = equipos_legajos[pos_equipo]
+
     if legajo == "":
         print("Error: El equipo no tiene un empleado asociado.")
         return
 
-    pos_empleado = buscar_posicion(datos.empleados_legajos, legajo)
-    departamento = datos.empleados_departamentos[pos_empleado]
-    tipo = datos.equipos_tipos[pos_equipo]
+    pos_empleado = buscar_posicion(empleados_legajos, legajo)
+    departamento = empleados_departamentos[pos_empleado]
+    tipo = equipos_tipos[pos_equipo]
 
     pos_depto = datos.departamentos.index(departamento)
     pos_tipo = datos.tipos_equipos.index(tipo)
 
-    if datos.matriz_asignaciones[pos_depto][pos_tipo] > 0:
-        datos.matriz_asignaciones[pos_depto][pos_tipo] -= 1
+    if matriz_asignaciones[pos_depto][pos_tipo] > 0:
+        matriz_asignaciones[pos_depto][pos_tipo] -= 1
 
-    datos.equipos_estados[pos_equipo] = "Disponible"
-    datos.equipos_legajos[pos_equipo] = ""
+    equipos_estados[pos_equipo] = "Disponible"
+    equipos_legajos[pos_equipo] = ""
 
     print("Equipo devuelto exitosamente.")
 
 
-def modificar_estado_equipo(codigo, nuevo_estado):
+def modificar_estado_equipo(codigo, nuevo_estado, equipos_codigos, equipos_estados):
+    pos_equipo = buscar_posicion(equipos_codigos, codigo)
 
-    pos_equipo = buscar_posicion(datos.equipos_codigos, codigo)
     if pos_equipo == -1:
         print("Error: No existe un equipo con este codigo.")
         return
@@ -132,7 +131,7 @@ def modificar_estado_equipo(codigo, nuevo_estado):
         print("Error: Estado invalido.")
         return
 
-    estado_actual = datos.equipos_estados[pos_equipo]
+    estado_actual = equipos_estados[pos_equipo]
 
     if estado_actual == "Asignado":
         print("Error: El equipo esta asignado. Debe devolverlo antes de cambiar su estado.")
@@ -150,58 +149,57 @@ def modificar_estado_equipo(codigo, nuevo_estado):
         print("Error: Desde En reparación solo se puede pasar a Disponible o Fuera de servicio.")
         return
 
-    datos.equipos_estados[pos_equipo] = nuevo_estado
+    equipos_estados[pos_equipo] = nuevo_estado
     print("Estado actualizado exitosamente.")
 
 
-def buscar_equipo_por_codigo(codigo):
-
-    if codigo not in datos.equipos_codigos:
+def buscar_equipo_por_codigo(codigo, equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos, empleados_legajos, empleados_nombres, empleados_departamentos):
+    if codigo not in equipos_codigos:
         print("No existe ese equipo.")
         return
 
-    i = datos.equipos_codigos.index(codigo)
-    legajo = datos.equipos_legajos[i]
+    i = equipos_codigos.index(codigo)
+    legajo = equipos_legajos[i]
 
-    if legajo in datos.empleados_legajos:
-        j = datos.empleados_legajos.index(legajo)
-        print(datos.equipos_codigos[i], datos.equipos_tipos[i], datos.equipos_estados[i],
-              datos.empleados_nombres[j], datos.empleados_departamentos[j])
+    if legajo in empleados_legajos:
+        j = empleados_legajos.index(legajo)
+        print(equipos_codigos[i], equipos_tipos[i], equipos_estados[i],
+              empleados_nombres[j], empleados_departamentos[j])
     else:
-        print(datos.equipos_codigos[i], datos.equipos_tipos[i], datos.equipos_estados[i], "Sin asignar")
+        print(equipos_codigos[i], equipos_tipos[i], equipos_estados[i], "Sin asignar")
 
 
-def buscar_empleado_por_legajo(legajo):
-    if legajo not in datos.empleados_legajos:
+def buscar_empleado_por_legajo(legajo, empleados_legajos, empleados_nombres, empleados_departamentos, equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos):
+    if legajo not in empleados_legajos:
         print("No existe ese empleado.")
         return
 
-    i = datos.empleados_legajos.index(legajo)
+    i = empleados_legajos.index(legajo)
+
     print("Legajo:", legajo)
-    print("Nombre:", datos.empleados_nombres[i])
-    print("Departamento:", datos.empleados_departamentos[i])
-        
+    print("Nombre:", empleados_nombres[i])
+    print("Departamento:", empleados_departamentos[i])
 
-    for k in range(len(datos.equipos_codigos)):
-        if datos.equipos_legajos[k] == legajo:
-            print(" -", datos.equipos_codigos[k], datos.equipos_tipos[k], datos.equipos_estados[k])
+    for k in range(len(equipos_codigos)):
+        if equipos_legajos[k] == legajo:
+            print(" -", equipos_codigos[k], equipos_tipos[k], equipos_estados[k])
 
-def listar_inventario():
-    if len(datos.equipos_codigos) == 0:
+def listar_inventario(equipos_codigos, equipos_tipos, equipos_estados):
+    if len(equipos_codigos) == 0:
         print("Todavía no hay equipos registrados.")
         return
 
-    for i in range(len(datos.equipos_codigos)):
+    for i in range(len(equipos_codigos)):
         print(
-            f"Codigo: {datos.equipos_codigos[i]} | "
-            f"Tipo: {datos.equipos_tipos[i]} | "
-            f"Estado: {datos.equipos_estados[i]}"
+            f"Codigo: {equipos_codigos[i]} | "
+            f"Tipo: {equipos_tipos[i]} | "
+            f"Estado: {equipos_estados[i]}"
         )
 
 
-def total_asignados_por_departamento():
+def total_asignados_por_departamento(matriz_asignaciones):
     for i in range(len(datos.departamentos)):
-        print(datos.departamentos[i], ":", sum(datos.matriz_asignaciones[i]))
+        print(datos.departamentos[i], ":", sum(matriz_asignaciones[i]))
 
 
 def total_asignados_por_tipo():

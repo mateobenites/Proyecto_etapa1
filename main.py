@@ -1,110 +1,153 @@
+import datos
 import operaciones
 
-opcion = ""
+def main():
+    (empleados_legajos, empleados_nombres, empleados_departamentos,
+     equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos,
+     matriz_asignaciones) = datos.crear_datos()
 
-while opcion != "10":
-    print("\n--- GESTIÓN DE EQUIPAMIENTO ---")
-    print("0. Acerca del sistema")
-    print("1. Registrar equipo")
-    print("2. Registrar empleado")
-    print("3. Asignar equipo")
-    print("4. Registrar devolución")
-    print("5. Modificar estado de equipo")
-    print("6. Buscar equipo")
-    print("7. Consultar equipos de un empleado")
-    print("8. Listar inventario")
-    print("9. Estadísticas e informes")
-    print("10. Salir")
+    opcion = ""
 
-    opcion = input("Seleccione una opción: ").strip()
+    while opcion != "10":
+        print("\n--- GESTIÓN DE EQUIPAMIENTO ---")
+        print("0. Acerca del sistema")
+        print("1. Registrar equipo")
+        print("2. Registrar empleado")
+        print("3. Asignar equipo")
+        print("4. Registrar devolución")
+        print("5. Modificar estado de equipo")
+        print("6. Buscar equipo")
+        print("7. Consultar equipos de un empleado")
+        print("8. Listar inventario")
+        print("9. Estadísticas e informes")
+        print("10. Salir")
 
-    if opcion == "0":
-        print("\n--- ACERCA DEL SISTEMA ---")
-        print("Sistema de Administración de Equipamiento Tecnológico.")
-        print("Permite registrar equipos y empleados, asignar y devolver")
-        print("dispositivos, controlar su estado y consultar estadísticas")
-        print("generales del inventario de la organización.")
+        opcion = input("Seleccione una opción: ").strip()
 
-    elif opcion == "1":
-        codigo = input("Ingrese el código del equipo: ").strip().upper()
-        tipo = input("Ingrese el tipo: Desktop, Notebook, Monitor o Celular: ").strip().capitalize()
+        if opcion == "0":
+            print("\n--- ACERCA DEL SISTEMA ---")
+            print("Sistema de Administración de Equipamiento Tecnológico.")
+            print("Permite registrar equipos y empleados, asignar y devolver")
+            print("dispositivos, controlar su estado y consultar estadísticas")
+            print("generales del inventario de la organización.")
 
-        operaciones.registrar_equipo(codigo, tipo)
+        elif opcion == "1":
+            codigo = input("Ingrese el código del equipo: ").strip().upper()
+            tipo = input("Ingrese el tipo: Desktop, Notebook, Monitor o Celular: ").strip().capitalize()
 
-    elif opcion == "2":
-        legajo = input("Ingrese el número de legajo (1000 a 9999): ").strip()
-        nombre = input("Ingrese el nombre y apellido: ").strip()
-        departamento = input("Ingrese el departamento: Administración, Ventas, Sistemas o Marketing: ").strip().capitalize()
+            operaciones.registrar_equipo(
+                codigo, tipo,
+                equipos_codigos, equipos_tipos,
+                equipos_estados, equipos_legajos
+            )
 
-        if departamento == "Administracion":
-            departamento = "Administración"
+        elif opcion == "2":
+            legajo = input("Ingrese el número de legajo (1000 a 9999): ").strip()
+            nombre = input("Ingrese el nombre y apellido: ").strip()
+            departamento = input("Ingrese el departamento: Administración, Ventas, Sistemas o Marketing: ").strip().capitalize()
 
-        operaciones.registrar_empleado(legajo, nombre, departamento)
+            if departamento == "Administracion":
+                departamento = "Administración"
 
-    elif opcion == "3":
-        codigo = input("Ingrese el código del equipo a asignar: ").strip().upper()
-        legajo = input("Ingrese el legajo del empleado: ").strip()
+            operaciones.registrar_empleado(
+                legajo, nombre, departamento,
+                empleados_legajos, empleados_nombres,
+                empleados_departamentos
+            )
 
-        operaciones.asignar_equipo(codigo, legajo)
+        elif opcion == "3":
+            codigo = input("Ingrese el código del equipo a asignar: ").strip().upper()
+            legajo = input("Ingrese el legajo del empleado: ").strip()
 
-    elif opcion == "4":
-        codigo = input("Ingrese el código del equipo a devolver: ").strip().upper()
+            operaciones.asignar_equipo(
+                codigo, legajo,
+                equipos_codigos, equipos_tipos,
+                equipos_estados, equipos_legajos,
+                empleados_legajos, empleados_departamentos,
+                matriz_asignaciones
+            )
 
-        operaciones.devolver_equipo(codigo)
+        elif opcion == "4":
+            codigo = input("Ingrese el código del equipo a devolver: ").strip().upper()
 
-    elif opcion == "5":
-        codigo = input("Ingrese el código del equipo: ").strip().upper()
-        nuevo_estado = input("Ingrese el nuevo estado: En reparación, Disponible o Fuera de servicio: ").strip().capitalize()
+            operaciones.devolver_equipo(
+                codigo,
+                equipos_codigos, equipos_tipos,
+                equipos_estados, equipos_legajos,
+                empleados_legajos, empleados_departamentos,
+                matriz_asignaciones
+            )
 
-        operaciones.modificar_estado_equipo(codigo, nuevo_estado)
+        elif opcion == "5":
+            codigo = input("Ingrese el código del equipo: ").strip().upper()
+            nuevo_estado = input("Ingrese el nuevo estado: En reparación, Disponible o Fuera de servicio: ").strip().capitalize()
 
-    elif opcion == "6":
-        codigo = input("Código del equipo: ").strip().upper()
-        operaciones.buscar_equipo_por_codigo(codigo)
+            operaciones.modificar_estado_equipo(
+                codigo, nuevo_estado,
+                equipos_codigos, equipos_estados
+            )
 
-    elif opcion == "7":
-        legajo = input("Legajo del empleado: ").strip()
-        operaciones.buscar_empleado_por_legajo(legajo)
+        elif opcion == "6":
+            codigo = input("Código del equipo: ").strip().upper()
+            operaciones.buscar_equipo_por_codigo(
+                codigo,
+                equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos,
+                empleados_legajos, empleados_nombres, empleados_departamentos
+            )
 
-    elif opcion == "8":
-        print("\n--- LISTA DE EQUIPOS ---")
-        operaciones.listar_inventario()
+        elif opcion == "7":
+            legajo = input("Legajo del empleado: ").strip()
+            operaciones.buscar_empleado_por_legajo(
+                legajo,
+                empleados_legajos, empleados_nombres, empleados_departamentos,
+                equipos_codigos, equipos_tipos, equipos_estados, equipos_legajos
+            )
 
-    elif opcion == "9":
-        print("\n=== ESTADÍSTICAS E INFORMES ===")
+        elif opcion == "8":
+            print("\n--- LISTA DE EQUIPOS ---")
+            operaciones.listar_inventario(
+                equipos_codigos, equipos_tipos, equipos_estados
+            )
 
-        print("\n--- 1. Inventario General ---")
-        operaciones.listar_inventario()
+        elif opcion == "9":
+            print("\n=== ESTADÍSTICAS E INFORMES ===")
 
-        print("\n--- 2. Equipamiento por Departamento ---")
-        operaciones.informe_equipamiento_por_departamento()
+            print("\n--- 1. Inventario General ---")
+            operaciones.listar_inventario(
+                equipos_codigos, equipos_tipos, equipos_estados
+            )
 
-        print("\n--- 3. Listado por Estados ---")
-        operaciones.informe_listado_por_estados()
+            print("\n--- 2. Equipamiento por Departamento ---")
+            operaciones.informe_equipamiento_por_departamento(matriz_asignaciones)
 
-        print("\n--- 4. Ranking de Departamentos ---")
-        operaciones.ranking_departamentos()
+            print("\n--- 3. Listado por Estados ---")
+            operaciones.informe_listado_por_estados()
 
-        print("\n--- 5. Resumen General del Inventario ---")
-        operaciones.informe_resumen_general()
+            print("\n--- 4. Ranking de Departamentos ---")
+            operaciones.ranking_departamentos()
 
-        print("\n--- Totales por Departamento ---")
-        operaciones.total_asignados_por_departamento()
+            print("\n--- 5. Resumen General del Inventario ---")
+            operaciones.informe_resumen_general()
 
-        print("\n--- Totales por Tipo de Equipo ---")
-        operaciones.total_asignados_por_tipo()
+            print("\n--- Totales por Departamento ---")
+            operaciones.total_asignados_por_departamento()
 
-        print("\n--- Equipos en Reparación ---")
-        operaciones.contar_en_reparacion()
+            print("\n--- Totales por Tipo de Equipo ---")
+            operaciones.total_asignados_por_tipo()
 
-        print("\n--- Equipos Disponibles (filtro) ---")
-        operaciones.filtrar_equipos_disponibles()
+            print("\n--- Equipos en Reparación ---")
+            operaciones.contar_en_reparacion()
 
-        print("\n--- Alertas de Baja Disponibilidad ---")
-        operaciones.alerta_baja_disponibilidad()
+            print("\n--- Equipos Disponibles (filtro) ---")
+            operaciones.filtrar_equipos_disponibles()
 
-    elif opcion == "10":
-        print("Programa finalizado")
+            print("\n--- Alertas de Baja Disponibilidad ---")
+            operaciones.alerta_baja_disponibilidad()
 
-    else:
-        print("Opción inválida. Intente nuevamente.")
+        elif opcion == "10":
+            print("Programa finalizado")
+
+        else:
+            print("Opción inválida. Intente nuevamente.")
+
+main()
