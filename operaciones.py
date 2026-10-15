@@ -27,7 +27,7 @@ def registrar_equipo(codigo, tipo):
     datos.equipos_codigos.append(codigo)
     datos.equipos_tipos.append(tipo)
     datos.equipos_estados.append("Disponible")
-    datos.equipos_legajos.append(None)
+    datos.equipos_legajos.append("")
 
     print("Equipo registrado exitosamente.")
 
@@ -102,7 +102,7 @@ def devolver_equipo(codigo):
         return
 
     legajo = datos.equipos_legajos[pos_equipo]
-    if legajo is None:
+    if legajo == "":
         print("Error: El equipo no tiene un empleado asociado.")
         return
 
@@ -117,7 +117,7 @@ def devolver_equipo(codigo):
         datos.matriz_asignaciones[pos_depto][pos_tipo] -= 1
 
     datos.equipos_estados[pos_equipo] = "Disponible"
-    datos.equipos_legajos[pos_equipo] = None
+    datos.equipos_legajos[pos_equipo] = ""
 
     print("Equipo devuelto exitosamente.")
 
@@ -273,7 +273,7 @@ def informe_equipamiento_por_departamento():
         hay_equipos = False
         for k in range(len(datos.equipos_codigos)):
             legajo = datos.equipos_legajos[k]
-            if legajo is not None:
+            if legajo != "":
                 pos_empleado = buscar_posicion(datos.empleados_legajos, legajo)
                 if pos_empleado != -1 and datos.empleados_departamentos[pos_empleado] == depto:
                     hay_equipos = True
