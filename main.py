@@ -113,36 +113,34 @@ def main():
             print("\n=== ESTADÍSTICAS E INFORMES ===")
 
             print("\n--- 1. Inventario General ---")
-            operaciones.listar_inventario(
-                equipos_codigos, equipos_tipos, equipos_estados
-            )
+            operaciones.listar_inventario(equipos_codigos, equipos_tipos, equipos_estados)
 
             print("\n--- 2. Equipamiento por Departamento ---")
-            operaciones.informe_equipamiento_por_departamento(matriz_asignaciones)
+            operaciones.informe_equipamiento_por_departamento(equipos_codigos, equipos_tipos, equipos_legajos, empleados_legajos, empleados_departamentos, matriz_asignaciones)
 
             print("\n--- 3. Listado por Estados ---")
-            operaciones.informe_listado_por_estados()
+            operaciones.informe_listado_por_estados(equipos_codigos, equipos_estados)
 
             print("\n--- 4. Ranking de Departamentos ---")
-            operaciones.ranking_departamentos()
+            operaciones.ranking_departamentos(matriz_asignaciones)
 
             print("\n--- 5. Resumen General del Inventario ---")
-            operaciones.informe_resumen_general()
+            operaciones.informe_resumen_general(equipos_codigos, equipos_estados, matriz_asignaciones)
 
             print("\n--- Totales por Departamento ---")
-            operaciones.total_asignados_por_departamento()
+            operaciones.total_asignados_por_departamento(matriz_asignaciones)
 
             print("\n--- Totales por Tipo de Equipo ---")
-            operaciones.total_asignados_por_tipo()
+            operaciones.total_asignados_por_tipo(matriz_asignaciones)
 
             print("\n--- Equipos en Reparación ---")
-            operaciones.contar_en_reparacion()
+            operaciones.contar_en_reparacion(equipos_estados)
 
             print("\n--- Equipos Disponibles (filtro) ---")
-            operaciones.filtrar_equipos_disponibles()
+            operaciones.filtrar_equipos_disponibles(equipos_codigos, equipos_estados)
 
             print("\n--- Alertas de Baja Disponibilidad ---")
-            operaciones.alerta_baja_disponibilidad()
+            operaciones.alerta_baja_disponibilidad(equipos_tipos, equipos_estados)
 
         elif opcion == "10":
             print("Programa finalizado")
