@@ -177,7 +177,10 @@ def buscar_empleado_por_legajo(legajo):
         return
 
     i = datos.empleados_legajos.index(legajo)
-    print(datos.empleados_nombres[i], datos.empleados_departamentos[i])
+    print("Legajo:", legajo)
+    print("Nombre:", datos.empleados_nombres[i])
+    print("Departamento:", datos.empleados_departamentos[i])
+        
 
     for k in range(len(datos.equipos_codigos)):
         if datos.equipos_legajos[k] == legajo:
